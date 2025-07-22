@@ -29,6 +29,16 @@ class RedirectResourceTest {
     }
 
     @Test
+    void testRedirectLocation3() {
+
+		given().redirects().follow(false)
+			   .when().get("/old-path/location3")
+			   .then()
+			   		.statusCode(302)
+			   		.header("Location", "https://example.org/new-path");
+    }
+
+    @Test
     void testRedirectContentLocation() {
 
 		given().redirects().follow(false)
@@ -66,6 +76,21 @@ class RedirectResourceTest {
 			   .then()
 			   		.statusCode(302)
 			   		.header("Location", "https://example.com:81/some-forwarded-prefix/some-root-path/new-path");
+    }
+
+    @Test
+    void testRedirectLocationWithProxyHeaders3() {
+
+		given().redirects().follow(false)
+			   .when()
+			   		.header("X-Forwarded-Port", "81")
+			   		.header("X-Forwarded-Proto", "https")
+			   		.header("X-Forwarded-Host", "example.com")
+			   		.header("X-Forwarded-Prefix", "/some-forwarded-prefix")
+			   		.get("/old-path/location3")
+			   .then()
+			   		.statusCode(302)
+			   		.header("Location", "https://example.org/new-path");
     }
 
     @Test
