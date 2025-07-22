@@ -1,3 +1,4 @@
+Project to repduce issue https://github.com/quarkusio/quarkus/issues/49039
 
 # To reproduce 
 
